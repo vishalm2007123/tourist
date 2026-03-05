@@ -309,7 +309,7 @@ function initMap2() {
   if(heat.length) L.heatLayer(heat,{radius:35,blur:20}).addTo(map2);
 }
 
-// INCIDENT TABLE
+
 function renderTable() {
   incidents = JSON.parse(localStorage.getItem('incidents')) || [];
   const tb = document.getElementById('incidentTable');
@@ -341,7 +341,7 @@ function updateInc(id, status) {
   renderTable();
 }
 
-// TOURISTS FULL
+
 function renderTourists() {
   const el = document.getElementById('touristsFull');
   if (!tourists.length) { el.innerHTML = '<div style="text-align:center;color:var(--muted);padding:32px;">No tourists registered yet.</div>'; return; }
@@ -372,7 +372,7 @@ if (tourists.length === 0) {
   `).join('');
 }
 
-// ZONES
+
 const zones = [
   {name:'Heritage Zone A — Old City', status:'safe', tourists: tourists.filter(t=>t.zone?.includes('Heritage')).length},
   {name:'Coastal Zone B — Beach Belt', status:'caution', tourists: tourists.filter(t=>t.zone?.includes('Coastal')).length},
@@ -401,7 +401,7 @@ function cycleZone(btn) {
   btn.textContent = next.toUpperCase();
 }
 
-// BLOCKCHAIN LOG
+
 const blockEntries = [];
 tourists.forEach(t => {
   if (t.blockchainId) blockEntries.push({icon:'🆔',title:'Tourist ID Minted',sub:`${t.name} — ${t.nationality}`,hash:t.blockchainId,time:new Date(t.registeredAt).toLocaleString('en-IN'),block:'#'+(18924500+blockEntries.length)});
@@ -421,7 +421,7 @@ else {
   `).join('');
 }
 
-// ALERTS
+
 const alertItems = [
   {cls:'ai-danger',icon:'🔴',title:'Geo-Fence Breach Detected',sub:'Tourist entering restricted zone boundary',time:'Just now'},
   {cls:'ai-warn',icon:'⚠️',title:'High Crowd Density',sub:'Heritage Zone A — AI anomaly score: 0.87',time:'2 mins ago'},
