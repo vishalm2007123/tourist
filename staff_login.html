@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Officer Login — GuardianTrail</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--ink:#111827;--ink2:#374151;--muted:#6B7280;--border:#E5E7EB;--bg:#F9FAFB;--white:#fff;--navy:#1e3a5f;--teal:#0d9488;--amber:#d97706;--red:#dc2626;--green:#16a34a;--blue:#2563eb;}
+body{font-family:'Outfit',sans-serif;background:var(--navy);color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+
+/* BG pattern */
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px,transparent 1px);background-size:24px 24px;}
+
+.card{background:white;border-radius:22px;overflow:hidden;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,0.4);position:relative;z-index:1;}
+
+.card-top{background:var(--navy);padding:36px 36px 28px;text-align:center;position:relative;overflow:hidden;}
+.card-top::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,255,255,0.06);top:-80px;right:-60px;}
+.card-top .logo{font-size:18px;font-weight:800;color:white;margin-bottom:16px;position:relative;}
+.card-top .logo span{color:#5eead4;}
+.officer-icon{font-size:44px;margin-bottom:14px;position:relative;}
+.card-top h1{font-size:20px;font-weight:800;color:white;letter-spacing:-0.3px;margin-bottom:6px;position:relative;}
+.card-top p{font-size:13px;color:rgba(255,255,255,0.6);position:relative;}
+
+.card-body{padding:32px 36px;}
+
+.dept-select{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;
+}
+.dept-opt{
+  padding:10px 8px;border:1.5px solid var(--border);border-radius:10px;
+  text-align:center;cursor:pointer;transition:all 0.2s;
+  font-size:11px;font-weight:600;color:var(--muted);
+}
+.dept-opt:hover,.dept-opt.sel{border-color:var(--navy);color:var(--navy);background:#EFF6FF;}
+.dept-icon{font-size:20px;display:block;margin-bottom:3px;}
+
+label{display:block;font-size:12px;font-weight:700;color:var(--ink2);letter-spacing:0.3px;margin-bottom:6px;}
+input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);outline:none;transition:all 0.2s;margin-bottom:14px;}
+input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,58,95,0.08);}
+input::placeholder{color:#9CA3AF;}
+
+.btn{width:100%;padding:13px;background:var(--navy);color:white;border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn:hover{background:#152d4d;transform:translateY(-1px);}
+
+.msg{font-size:13px;padding:10px 14px;border-radius:9px;margin-top:12px;display:none;}
+.msg.err{background:#FEF2F2;border:1px solid #FECACA;color:var(--red);}
+.msg.ok{background:#F0FDF4;border:1px solid #BBF7D0;color:var(--green);}
+
+.links{margin-top:20px;text-align:center;font-size:13px;color:var(--muted);}
+.links a{color:var(--teal);font-weight:600;text-decoration:none;}
+
+.demo-hint{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--muted);margin-top:16px;line-height:1.6;}
+.demo-hint strong{color:var(--navy);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-top">
+    <div class="logo">🛡️ Guardian<span>Trail</span></div>
+    <div class="officer-icon">👮</div>
+    <h1>Officer Portal</h1>
+    <p>Command Center Access — Authorized Personnel Only</p>
+  </div>
+  <div class="card-body">
+    <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Department</div>
+    <div class="dept-select">
+      <div class="dept-opt sel" id="d-police" onclick="selectDept('police',this)"><span class="dept-icon">🚔</span>Tourist Police</div>
+      <div class="dept-opt" id="d-medical" onclick="selectDept('medical',this)"><span class="dept-icon">🏥</span>Medical</div>
+      <div class="dept-opt" id="d-admin" onclick="selectDept('admin',this)"><span class="dept-icon">🏛️</span>Admin</div>
+      <div class="dept-opt" id="d-rescue" onclick="selectDept('rescue',this)"><span class="dept-icon">🔥</span>Fire & Rescue</div>
+    </div>
+
+    <label>Officer ID / Email</label>
+    <input type="text" id="officerId" placeholder="officer@department.gov.in">
+
+    <label>Password</label>
+    <input type="password" id="password" placeholder="••••••••">
+
+    <button class="btn" onclick="login()">🔐 Enter Command Center</button>
+    <div class="msg" id="msg"></div>
+
+    <div class="demo-hint">
+      <strong>Demo:</strong> Enter any email + any password to access the command center dashboard.
+    </div>
+
+    <div class="links">
+      <p>Not an officer? <a href="registration.html">Register as Tourist →</a></p>
+      <p style="margin-top:8px;"><a href="staff_register.html">New officer registration</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedDept = 'Tourist Police';
+function selectDept(id, el) {
+  document.querySelectorAll('.dept-opt').forEach(d=>d.classList.remove('sel'));
+  el.classList.add('sel');
+  const names = {police:'Tourist Police',medical:'Emergency Medical',admin:'Administration',rescue:'Fire & Rescue'};
+  selectedDept = names[id];
+}
+function login() {
+  const id = document.getElementById('officerId').value.trim();
+  const pass = document.getElementById('password').value.trim();
+  const msg = document.getElementById('msg');
+  msg.className = 'msg'; msg.style.display = 'none';
+  if (!id || !pass) { msg.className = 'msg err'; msg.textContent = 'Please enter your ID and password.'; msg.style.display = 'block'; return; }
+  localStorage.setItem('staff_name', id.split('@')[0] || 'Officer');
+  localStorage.setItem('staff_dept', selectedDept);
+  localStorage.setItem('staff_logged', 'true');
+  msg.className = 'msg ok'; msg.textContent = '✅ Access granted! Loading command center...'; msg.style.display = 'block';
+  setTimeout(() => window.location.href = 'staff_home.html', 1000);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+</script>
+</body>
+</html>

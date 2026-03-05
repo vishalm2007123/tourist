@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>My Digital ID — GuardianTrail</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--ink:#111827;--ink2:#374151;--muted:#6B7280;--border:#E5E7EB;--bg:#F9FAFB;--white:#fff;--navy:#1e3a5f;--teal:#0d9488;--amber:#d97706;--red:#dc2626;--green:#16a34a;--blue:#2563eb;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding:40px 24px;}
+.wrap{max-width:900px;margin:0 auto;}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;margin-bottom:28px;transition:color 0.2s;}
+.back-link:hover{color:var(--navy);}
+
+.page-title{font-size:28px;font-weight:900;color:var(--navy);letter-spacing:-1px;margin-bottom:6px;}
+.page-sub{font-size:14px;color:var(--muted);margin-bottom:32px;}
+
+/* ID CARD */
+.id-card-container{margin-bottom:32px;}
+.id-card{
+  background:linear-gradient(135deg,#1e3a5f 0%,#1a3354 40%,#0f2340 100%);
+  color:white;border-radius:22px;padding:36px 40px;
+  position:relative;overflow:hidden;
+  box-shadow:0 16px 48px rgba(30,58,95,0.4);
+  max-width:680px;
+}
+/* decorative elements */
+.id-card::before{
+  content:'';position:absolute;
+  width:300px;height:300px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.05);
+  top:-100px;right:-80px;
+}
+.id-card::after{
+  content:'';position:absolute;
+  width:200px;height:200px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.04);
+  bottom:-60px;left:-40px;
+}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;position:relative;z-index:1;}
+.card-logo{font-size:14px;font-weight:800;color:rgba(255,255,255,0.9);}
+.card-logo span{color:#5eead4;}
+.card-type{font-family:'Space Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;margin-top:3px;}
+.verified-badge{
+  background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.4);
+  color:#6ee7b7;padding:5px 12px;border-radius:8px;
+  font-size:11px;font-weight:600;
+  display:flex;align-items:center;gap:5px;
+}
+.vb-dot{width:6px;height:6px;background:#6ee7b7;border-radius:50%;animation:v-pulse 1.5s infinite;}
+@keyframes v-pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.card-body{display:grid;grid-template-columns:1fr auto;gap:32px;position:relative;z-index:1;}
+.tourist-info .name{font-size:26px;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px;}
+.tourist-info .nationality{font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:20px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;}
+.info-field .if-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:3px;}
+.info-field .if-val{font-size:14px;font-weight:500;}
+.qr-box{
+  background:white;border-radius:14px;padding:10px;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;width:110px;flex-shrink:0;
+}
+.qr-box #qrCanvas{width:90px;height:90px;}
+.qr-label{font-size:9px;font-weight:700;letter-spacing:1px;color:var(--navy);margin-top:6px;text-transform:uppercase;}
+.card-bottom{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);position:relative;z-index:1;}
+.chain-row{display:flex;align-items:center;gap:12px;}
+.chain-icon-label{font-family:'Space Mono',monospace;font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:1.5px;flex-shrink:0;}
+.chain-addr{font-family:'Space Mono',monospace;font-size:12px;color:#5eead4;word-break:break-all;line-height:1.5;}
+
+/* TABS */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.tab{padding:11px 20px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;}
+.tab:hover{color:var(--ink);}
+.tab.active{color:var(--navy);border-bottom-color:var(--navy);}
+
+/* PANELS */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* AUDIT LOG */
+.audit-item{
+  padding:14px 18px;border:1px solid var(--border);border-radius:12px;
+  margin-bottom:10px;display:grid;
+  grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+  transition:box-shadow 0.15s;
+}
+.audit-item:hover{box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.audit-item:first-child{border-color:#BBF7D0;background:#F0FDF4;}
+.audit-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.audit-ai-teal{background:#F0FDFA;}
+.audit-ai-blue{background:#EFF6FF;}
+.audit-ai-amber{background:#FFFBEB;}
+.audit-ai-red{background:#FEF2F2;}
+.audit-info .ai-title{font-size:14px;font-weight:600;color:var(--ink);}
+.audit-info .ai-hash{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px;}
+.audit-info .ai-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.audit-time{font-size:11px;color:var(--muted);text-align:right;white-space:nowrap;}
+.audit-block{font-family:'Space Mono',monospace;font-size:10px;color:var(--teal);margin-top:2px;}
+
+/* STATS */
+.id-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.is-card{background:white;border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+.is-num{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--navy);}
+.is-label{font-size:11px;color:var(--muted);margin-top:4px;}
+
+/* ACTIONS */
+.action-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;}
+.act-btn{padding:11px 20px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+.ab-navy{background:var(--navy);color:white;}
+.ab-navy:hover{background:#152d4d;}
+.ab-outline{background:white;color:var(--ink);border:1.5px solid var(--border);}
+.ab-outline:hover{border-color:var(--navy);color:var(--navy);}
+.ab-teal{background:#F0FDFA;color:var(--teal);border:1.5px solid #99F6E4;}
+.ab-teal:hover{background:#CCFBF1;}
+
+@media print {
+  .back-link,.tabs,.action-btns,.panel:not(.active){display:none!important;}
+  body{background:white;}
+  .id-card{box-shadow:none;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="home.html" class="back-link">← Back to Dashboard</a>
+
+  <div class="page-title">🪪 My Blockchain Digital ID</div>
+  <p class="page-sub">Your tamper-proof identity minted on Ethereum. Present this for instant verification at any checkpoint.</p>
+
+  <!-- ID CARD -->
+  <div class="id-card-container">
+    <div class="id-card" id="idCard">
+      <div class="card-top">
+        <div>
+          <div class="card-logo">🛡️ Guardian<span>Trail</span></div>
+          <div class="card-type">TOURIST DIGITAL IDENTITY</div>
+        </div>
+        <div class="verified-badge"><div class="vb-dot"></div>Blockchain Verified</div>
+      </div>
+      <div class="card-body">
+        <div class="tourist-info">
+          <div class="name" id="cardName">—</div>
+          <div class="nationality" id="cardNat">🌍 —</div>
+          <div class="info-grid">
+            <div class="info-field"><div class="if-label">Passport / ID</div><div class="if-val" id="cardPassport">—</div></div>
+            <div class="info-field"><div class="if-label">Zone</div><div class="if-val" id="cardZone">—</div></div>
+            <div class="info-field"><div class="if-label">Registered</div><div class="if-val" id="cardDate">—</div></div>
+            <div class="info-field"><div class="if-label">Status</div><div class="if-val" style="color:#6ee7b7;">● Active</div></div>
+            <div class="info-field"><div class="if-label">Emergency Contact</div><div class="if-val" id="cardEmergency">—</div></div>
+            <div class="info-field"><div class="if-label">Departs</div><div class="if-val" id="cardDepart">—</div></div>
+          </div>
+        </div>
+        <div class="qr-box">
+          <div id="qrCanvas"></div>
+          <div class="qr-label">Scan to verify</div>
+        </div>
+      </div>
+      <div class="card-bottom">
+        <div class="chain-row">
+          <div class="chain-icon-label">BLOCKCHAIN ADDRESS</div>
+          <div class="chain-addr" id="cardChain">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="id-stats">
+    <div class="is-card">
+      <div class="is-num" id="s1">0</div>
+      <div class="is-label">Incidents Filed</div>
+    </div>
+    <div class="is-card">
+      <div class="is-num" id="s2">0</div>
+      <div class="is-label">Checkpoints Passed</div>
+    </div>
+    <div class="is-card">
+      <div class="is-num" id="s3">0</div>
+      <div class="is-label">Journal Entries</div>
+    </div>
+    <div class="is-card">
+      <div class="is-num" id="s4" style="color:var(--green)">—</div>
+      <div class="is-label">Safety Score</div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="action-btns">
+    <button class="act-btn ab-navy" onclick="window.print()">🖨️ Print ID Card</button>
+    <button class="act-btn ab-teal" onclick="copyChain()">📋 Copy Blockchain Address</button>
+    <a href="home.html" class="act-btn ab-outline">← Back to Dashboard</a>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="showPanel('audit',this)">⛓️ Blockchain Audit Log</div>
+    <div class="tab" onclick="showPanel('details',this)">📋 Full Details</div>
+  </div>
+
+  <!-- AUDIT LOG -->
+  <div class="panel active" id="panel-audit">
+    <div id="auditLog">
+      <div style="color:var(--muted);text-align:center;padding:32px;font-size:14px;">No blockchain records yet. Actions you take will appear here.</div>
+    </div>
+  </div>
+
+  <!-- FULL DETAILS -->
+  <div class="panel" id="panel-details">
+    <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:28px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" id="detailGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const fields = ['name','email','phone','dob','gender','nationality','passport','zone','arrivalDate','departureDate','emergencyName','emergencyPhone','medical','blockchainId','blockchainid','safetyScore','registeredAt'];
+const data = {};
+fields.forEach(f => { data[f] = localStorage.getItem('tourist_' + f) || ''; });
+// also try blockchain_id
+const chainId = data.blockchainId || data.blockchainid || localStorage.getItem('tourist_blockchain_id') || '—';
+
+const name = data.name || 'Tourist';
+
+// Populate card
+document.getElementById('cardName').textContent = name;
+document.getElementById('cardNat').textContent = '🌍 ' + (data.nationality || '—');
+document.getElementById('cardPassport').textContent = data.passport || '—';
+document.getElementById('cardZone').textContent = (data.zone || '—').split('—')[0].trim();
+document.getElementById('cardDate').textContent = data.registeredAt ? new Date(data.registeredAt).toLocaleDateString('en-IN') : '—';
+document.getElementById('cardEmergency').textContent = data.emergencyName || '—';
+document.getElementById('cardDepart').textContent = data.departureDate || '—';
+document.getElementById('cardChain').textContent = chainId;
+
+// QR Code
+if (chainId !== '—') {
+  try {
+    new QRCode(document.getElementById('qrCanvas'), {
+      text: JSON.stringify({ id: chainId, name, passport: data.passport }),
+      width: 90, height: 90,
+      colorDark: '#1e3a5f', colorLight: '#ffffff'
+    });
+  } catch(e) {
+    document.getElementById('qrCanvas').textContent = '⬛';
+  }
+}
+
+// Stats
+const incidents = JSON.parse(localStorage.getItem('incidents')) || [];
+const journal = JSON.parse(localStorage.getItem('travel_journal_' + name)) || [];
+document.getElementById('s1').textContent = incidents.filter(i=>i.tourist===name).length;
+document.getElementById('s2').textContent = Math.floor(Math.random()*5) + 1;
+document.getElementById('s3').textContent = journal.length;
+document.getElementById('s4').textContent = (data.safetyScore || '95') + '/100';
+
+// Audit log
+const auditEntries = [];
+if (chainId !== '—') {
+  auditEntries.push({ icon: '🆔', type: 'audit-ai-teal', title: 'Digital ID Minted', sub: 'Tourist identity registered and written to blockchain', hash: chainId, time: new Date(data.registeredAt || Date.now()).toLocaleString('en-IN'), block: '#' + (18924500 + Math.floor(Math.random()*100)) });
+}
+incidents.filter(i=>i.tourist===name).forEach(i => {
+  auditEntries.push({ icon: '🚨', type: 'audit-ai-red', title: 'Incident Filed: ' + i.type, sub: 'Location: ' + i.location, hash: i.txHash || '0x---', time: new Date(i.createdAt).toLocaleString('en-IN'), block: '#' + (i.blockNum || 18924501) });
+});
+journal.forEach(j => {
+  auditEntries.push({ icon: '📓', type: 'audit-ai-blue', title: 'Journal Entry: ' + j.place, sub: 'Travel log created', hash: '0x' + Array.from({length:12},()=>Math.floor(Math.random()*16).toString(16)).join(''), time: new Date(j.time).toLocaleString('en-IN'), block: '#' + (18924502 + Math.floor(Math.random()*100)) });
+});
+
+const auditEl = document.getElementById('auditLog');
+if (auditEntries.length > 0) {
+  auditEl.innerHTML = auditEntries.map(e => `
+    <div class="audit-item">
+      <div class="audit-icon ${e.type}">${e.icon}</div>
+      <div class="audit-info">
+        <div class="ai-title">${e.title}</div>
+        <div class="ai-sub">${e.sub}</div>
+        <div class="ai-hash">${e.hash.substring(0,32)}...</div>
+      </div>
+      <div class="audit-time">${e.time}<div class="audit-block">${e.block}</div></div>
+    </div>
+  `).join('');
+}
+
+// Details
+const detailEl = document.getElementById('detailGrid');
+const detailFields = [
+  ['Full Name', name], ['Email', data.email], ['Phone', data.phone],
+  ['Date of Birth', data.dob], ['Gender', data.gender], ['Nationality', data.nationality],
+  ['Passport / ID', data.passport], ['Zone Assigned', (data.zone||'').split('—')[0]],
+  ['Arrival Date', data.arrivalDate], ['Departure Date', data.departureDate],
+  ['Emergency Contact', data.emergencyName], ['Emergency Phone', data.emergencyPhone],
+  ['Medical Notes', data.medical || 'None'],
+  ['Registered', data.registeredAt ? new Date(data.registeredAt).toLocaleString('en-IN') : '—'],
+];
+detailEl.innerHTML = detailFields.map(([k,v]) => `
+  <div>
+    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">${k}</div>
+    <div style="font-size:14px;font-weight:500;color:var(--ink);">${v || '—'}</div>
+  </div>
+`).join('');
+
+function showPanel(id, tab) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  tab.classList.add('active');
+}
+
+function copyChain() {
+  navigator.clipboard.writeText(chainId).then(() => {
+    const btn = event.target;
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.innerHTML = '📋 Copy Blockchain Address', 2000);
+  });
+}
+</script>
+</body>
+</html>

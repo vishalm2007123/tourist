@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Blockchain Explorer — GuardianTrail</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--ink:#111827;--ink2:#374151;--muted:#6B7280;--border:#E5E7EB;--bg:#F9FAFB;--white:#fff;--navy:#1e3a5f;--teal:#0d9488;--amber:#d97706;--red:#dc2626;--green:#16a34a;--blue:#2563eb;}
+body{font-family:'Outfit',sans-serif;background:var(--navy);color:white;min-height:100vh;padding:40px 24px;}
+.wrap{max-width:900px;margin:0 auto;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
+.logo{font-size:18px;font-weight:800;color:white;text-decoration:none;}
+.logo span{color:#5eead4;}
+.back-link{color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:5px;}
+.back-link:hover{color:white;}
+
+h1{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:6px;}
+.sub{font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:32px;}
+
+/* SEARCH */
+.search-row{display:flex;gap:10px;margin-bottom:32px;}
+.search-input{flex:1;padding:13px 18px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:11px;font-family:'Space Mono',monospace;font-size:13px;color:white;outline:none;transition:all 0.2s;}
+.search-input::placeholder{color:rgba(255,255,255,0.3);}
+.search-input:focus{border-color:rgba(94,234,212,0.5);background:rgba(255,255,255,0.1);}
+.search-btn{padding:13px 22px;background:#5eead4;color:var(--navy);border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.search-btn:hover{background:#99f6e4;}
+
+/* STATS */
+.chain-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;}
+.cs{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:18px;}
+.cs-n{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:#5eead4;margin-bottom:4px;}
+.cs-l{font-size:11px;color:rgba(255,255,255,0.5);}
+
+/* BLOCKS */
+.block-section-title{font-family:'Space Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+.block-item{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;padding:16px 20px;margin-bottom:8px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  transition:background 0.2s;cursor:pointer;
+}
+.block-item:hover{background:rgba(255,255,255,0.08);}
+.block-item:first-child{border-color:rgba(94,234,212,0.3);background:rgba(94,234,212,0.05);}
+.bi-num{font-family:'Space Mono',monospace;font-size:11px;color:#5eead4;background:rgba(94,234,212,0.1);padding:5px 10px;border-radius:7px;white-space:nowrap;}
+.bi-info .bi-type{font-size:14px;font-weight:600;margin-bottom:3px;}
+.bi-info .bi-hash{font-family:'Space Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);}
+.bi-info .bi-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;}
+.bi-time{font-size:11px;color:rgba(255,255,255,0.4);text-align:right;white-space:nowrap;}
+.bi-time .bi-ago{color:rgba(255,255,255,0.3);font-size:10px;margin-top:2px;}
+
+/* SEARCH RESULT */
+.search-result{background:rgba(94,234,212,0.08);border:1px solid rgba(94,234,212,0.25);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:none;}
+.sr-title{font-size:13px;font-weight:700;color:#5eead4;margin-bottom:14px;font-family:'Space Mono',monospace;letter-spacing:1px;}
+.sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.sr-field .sf-l{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.sr-field .sf-v{font-size:14px;font-weight:500;}
+.sf-hash{font-family:'Space Mono',monospace;font-size:11px;color:#5eead4;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a href="index.html" class="logo">🛡️ Guardian<span>Trail</span></a>
+    <a href="home.html" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <h1>⛓️ Blockchain Explorer</h1>
+  <p class="sub">Every identity, incident, and action — permanently recorded. Search any transaction hash or tourist ID.</p>
+
+  <div class="search-row">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search by TX hash, name, or blockchain ID...">
+    <button class="search-btn" onclick="doSearch()">Search</button>
+  </div>
+
+  <div class="search-result" id="searchResult"></div>
+
+  <div class="chain-stats">
+    <div class="cs"><div class="cs-n" id="totalBlocks">0</div><div class="cs-l">Total Transactions</div></div>
+    <div class="cs"><div class="cs-n" id="totalIds" style="color:#a5b4fc">0</div><div class="cs-l">IDs Minted</div></div>
+    <div class="cs"><div class="cs-n" id="totalInc" style="color:#fca5a5">0</div><div class="cs-l">Incidents Logged</div></div>
+    <div class="cs"><div class="cs-n" id="latestBlock">—</div><div class="cs-l">Latest Block</div></div>
+  </div>
+
+  <div class="block-section-title">LATEST TRANSACTIONS</div>
+  <div id="blockLog"></div>
+</div>
+
+<script>
+const tourists = JSON.parse(localStorage.getItem('tourists')) || [];
+const incidents = JSON.parse(localStorage.getItem('incidents')) || [];
+const journal = JSON.parse(localStorage.getItem('travel_journal_' + (localStorage.getItem('tourist_name')||'')) ) || [];
+
+// Build entries
+const entries = [];
+let blockNum = 18924500;
+
+tourists.forEach(t => {
+  entries.push({
+    icon:'🆔', type:'Tourist ID Minted',
+    sub: t.name + ' · ' + (t.nationality||''),
+    hash: t.blockchainId || ('0x'+Array.from({length:40},()=>Math.floor(Math.random()*16).toString(16)).join('')),
+    time: new Date(t.registeredAt||Date.now()).toLocaleString('en-IN'),
+    block: '#'+(blockNum++),
+    data: t
+  });
+});
+incidents.forEach(i => {
+  entries.push({
+    icon:'🚨', type: 'Incident: ' + i.type,
+    sub: i.tourist + ' · ' + i.location,
+    hash: i.txHash || ('0x'+Array.from({length:40},()=>Math.floor(Math.random()*16).toString(16)).join('')),
+    time: new Date(i.createdAt).toLocaleString('en-IN'),
+    block: '#'+(blockNum++),
+    data: i
+  });
+});
+journal.forEach(j => {
+  entries.push({
+    icon:'📓', type: 'Journal: ' + j.place,
+    sub: 'Travel log entry',
+    hash: '0x'+Array.from({length:40},()=>Math.floor(Math.random()*16).toString(16)).join(''),
+    time: new Date(j.time||Date.now()).toLocaleString('en-IN'),
+    block: '#'+(blockNum++),
+    data: j
+  });
+});
+
+// Add simulated entries if empty
+if (entries.length === 0) {
+  const sims = ['Tourist ID Minted','Incident: Theft','Zone Check-In','ID Verified','Incident Resolved','SOS Alert'];
+  sims.forEach((s,i) => {
+    entries.push({
+      icon: ['🆔','🚨','📍','🔍','✅','🆘'][i],
+      type: s, sub: 'Simulated blockchain record',
+      hash: '0x'+Array.from({length:40},()=>Math.floor(Math.random()*16).toString(16)).join(''),
+      time: new Date(Date.now()-i*600000).toLocaleString('en-IN'),
+      block: '#'+(blockNum++), data: {}
+    });
+  });
+}
+
+document.getElementById('totalBlocks').textContent = entries.length;
+document.getElementById('totalIds').textContent = tourists.length;
+document.getElementById('totalInc').textContent = incidents.length;
+document.getElementById('latestBlock').textContent = '#' + (blockNum-1);
+
+const logEl = document.getElementById('blockLog');
+logEl.innerHTML = entries.slice().reverse().map(e => `
+  <div class="block-item">
+    <span class="bi-num">${e.block}</span>
+    <div class="bi-info">
+      <div class="bi-type">${e.icon} ${e.type}</div>
+      <div class="bi-sub">${e.sub}</div>
+      <div class="bi-hash">${e.hash}</div>
+    </div>
+    <div class="bi-time">${e.time}</div>
+  </div>
+`).join('');
+
+function doSearch() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const res = document.getElementById('searchResult');
+  if (!q) { res.style.display = 'none'; return; }
+  const found = entries.find(e => e.hash.toLowerCase().includes(q) || JSON.stringify(e.data).toLowerCase().includes(q) || e.type.toLowerCase().includes(q));
+  if (found) {
+    res.style.display = 'block';
+    res.innerHTML = `
+      <div class="sr-title">✅ TRANSACTION FOUND — ${found.block}</div>
+      <div class="sr-grid">
+        <div class="sr-field"><div class="sf-l">Type</div><div class="sf-v">${found.icon} ${found.type}</div></div>
+        <div class="sr-field"><div class="sf-l">Block</div><div class="sf-v sf-hash">${found.block}</div></div>
+        <div class="sr-field"><div class="sf-l">Details</div><div class="sf-v">${found.sub}</div></div>
+        <div class="sr-field"><div class="sf-l">Timestamp</div><div class="sf-v">${found.time}</div></div>
+        <div class="sr-field" style="grid-column:1/-1"><div class="sf-l">Transaction Hash</div><div class="sf-v sf-hash" style="word-break:break-all;">${found.hash}</div></div>
+      </div>
+    `;
+  } else {
+    res.style.display = 'block';
+    res.innerHTML = '<div style="color:rgba(255,255,255,0.5);text-align:center;padding:16px;">No transaction found matching "<strong style=\'color:white\'>' + q + '</strong>"</div>';
+  }
+}
+document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') doSearch(); });
+</script>
+</body>
+</html>

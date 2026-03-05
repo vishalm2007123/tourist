@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Officer Registration — GuardianTrail</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--ink:#111827;--ink2:#374151;--muted:#6B7280;--border:#E5E7EB;--bg:#F9FAFB;--white:#fff;--navy:#1e3a5f;--teal:#0d9488;--red:#dc2626;--green:#16a34a;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
+.card{background:white;border:1px solid var(--border);border-radius:20px;padding:44px;max-width:460px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,0.08);}
+.logo{font-size:18px;font-weight:800;color:var(--navy);text-decoration:none;display:block;text-align:center;margin-bottom:24px;}
+.logo span{color:var(--teal);}
+h1{font-size:24px;font-weight:900;color:var(--navy);text-align:center;letter-spacing:-0.5px;margin-bottom:6px;}
+.sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:28px;}
+label{display:block;font-size:12px;font-weight:700;color:var(--ink2);letter-spacing:0.3px;margin:16px 0 5px;}
+input,select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);outline:none;transition:all 0.2s;}
+input:focus,select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,58,95,0.08);}
+input::placeholder{color:#9CA3AF;}
+.btn{width:100%;padding:13px;background:var(--navy);color:white;border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;cursor:pointer;margin-top:20px;transition:all 0.2s;}
+.btn:hover{background:#152d4d;transform:translateY(-1px);}
+.msg{font-size:13px;padding:10px 14px;border-radius:9px;margin-top:12px;display:none;}
+.msg.err{background:#FEF2F2;border:1px solid #FECACA;color:var(--red);}
+.msg.ok{background:#F0FDF4;border:1px solid #BBF7D0;color:var(--green);}
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
+.links{text-align:center;font-size:13px;color:var(--muted);}
+.links a{color:var(--teal);font-weight:600;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="card">
+  <a href="index.html" class="logo">🛡️ Guardian<span>Trail</span></a>
+  <h1>Officer Registration</h1>
+  <p class="sub">Register to access the command center and respond to tourist incidents.</p>
+
+  <label>Full Name</label>
+  <input type="text" id="name" placeholder="Officer Full Name">
+
+  <label>Official Email</label>
+  <input type="email" id="email" placeholder="officer@dept.gov.in">
+
+  <label>Badge / Officer ID</label>
+  <input type="text" id="badge" placeholder="e.g. TP-2025-0042">
+
+  <label>Department</label>
+  <select id="dept">
+    <option value="">Select your department</option>
+    <option>Tourist Police</option>
+    <option>Emergency Medical Services</option>
+    <option>Fire & Rescue</option>
+    <option>District Tourism Authority</option>
+    <option>Cyber Safety Unit</option>
+  </select>
+
+  <label>Phone Number</label>
+  <input type="text" id="phone" placeholder="+91 XXXXX XXXXX">
+
+  <label>Password</label>
+  <input type="password" id="password" placeholder="Create a secure password">
+
+  <button class="btn" onclick="register()">✅ Register as Officer</button>
+  <div class="msg" id="msg"></div>
+
+  <div class="divider"></div>
+  <div class="links">
+    Already registered? <a href="staff_login.html">Login here</a><br>
+    <span style="margin-top:6px;display:block;">Are you a tourist? <a href="registration.html">Tourist registration</a></span>
+  </div>
+</div>
+<script>
+function register() {
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const badge=document.getElementById('badge').value.trim();
+  const dept=document.getElementById('dept').value;
+  const phone=document.getElementById('phone').value.trim();
+  const pass=document.getElementById('password').value;
+  const msg=document.getElementById('msg');
+  msg.className='msg';msg.style.display='none';
+  if(!name||!email||!badge||!dept||!phone||!pass){msg.className='msg err';msg.textContent='Please fill all fields.';msg.style.display='block';return;}
+  localStorage.setItem('staff_name',name);
+  localStorage.setItem('staff_badge',badge);
+  localStorage.setItem('staff_dept',dept);
+  msg.className='msg ok';msg.textContent='✅ Officer account created! Redirecting to login...';msg.style.display='block';
+  setTimeout(()=>window.location.href='staff_login.html',1200);
+}
+</script>
+</body>
+</html>

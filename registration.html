@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register — GuardianTrail</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --ink:#111827;--ink2:#374151;--muted:#6B7280;
+    --border:#E5E7EB;--bg:#F9FAFB;--white:#ffffff;
+    --navy:#1e3a5f;--teal:#0d9488;--amber:#d97706;
+    --red:#dc2626;--green:#16a34a;--blue:#2563eb;
+  }
+  body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+
+  /* LEFT PANEL */
+  .left{
+    background:var(--navy); color:white;
+    padding:56px 48px;display:flex;flex-direction:column;
+    position:sticky;top:0;height:100vh;overflow:hidden;
+  }
+  .left-logo{font-size:20px;font-weight:800;margin-bottom:48px;text-decoration:none;color:white;}
+  .left-logo span{color:#5eead4;}
+  .left h2{font-size:32px;font-weight:900;letter-spacing:-1px;line-height:1.2;margin-bottom:16px;}
+  .left p{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:48px;}
+
+  .feature-list{display:flex;flex-direction:column;gap:16px;margin-bottom:auto;}
+  .feature-item{display:flex;gap:14px;align-items:flex-start;}
+  .fi-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+  .fi-text strong{display:block;font-size:14px;font-weight:600;margin-bottom:2px;}
+  .fi-text span{font-size:12px;color:rgba(255,255,255,0.5);}
+
+  .chain-card{
+    margin-top:32px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:14px;padding:16px;
+  }
+  .chain-card-label{font-family:'Space Mono',monospace;font-size:10px;color:#5eead4;letter-spacing:1.5px;margin-bottom:8px;}
+  .chain-hash{font-family:'Space Mono',monospace;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;word-break:break-all;}
+  .chain-status{display:flex;align-items:center;gap:6px;font-size:11px;color:#86efac;margin-top:8px;}
+  .cdot{width:6px;height:6px;background:#86efac;border-radius:50%;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+  /* RIGHT PANEL */
+  .right{padding:56px 48px;overflow-y:auto;}
+  .right-header{margin-bottom:36px;}
+  .right-header h1{font-size:28px;font-weight:900;color:var(--navy);letter-spacing:-0.5px;margin-bottom:6px;}
+  .right-header p{font-size:14px;color:var(--muted);}
+  .login-link{font-size:14px;color:var(--muted);margin-top:10px;}
+  .login-link a{color:var(--teal);font-weight:600;text-decoration:none;}
+
+  /* STEPS INDICATOR */
+  .steps-bar{display:flex;gap:0;margin-bottom:36px;}
+  .step-tab{flex:1;padding:10px;text-align:center;font-size:12px;font-weight:600;color:var(--muted);border-bottom:2px solid var(--border);transition:all 0.2s;cursor:pointer;}
+  .step-tab.active{color:var(--navy);border-color:var(--navy);}
+  .step-tab.done{color:var(--teal);border-color:var(--teal);}
+
+  /* FORM */
+  .form-step{display:none;}
+  .form-step.active{display:block;}
+
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .full{grid-column:1/-1;}
+
+  label{display:block;font-size:12px;font-weight:600;color:var(--ink2);letter-spacing:0.3px;margin-bottom:6px;}
+  input,select,textarea{
+    width:100%;padding:11px 14px;
+    border:1.5px solid var(--border);
+    border-radius:10px;background:white;
+    font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);
+    outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+  }
+  input:focus,select:focus,textarea:focus{
+    border-color:var(--navy);
+    box-shadow:0 0 0 3px rgba(30,58,95,0.08);
+  }
+  input::placeholder,textarea::placeholder{color:#9CA3AF;}
+  select option{font-family:'Outfit',sans-serif;}
+  .form-group{margin-bottom:18px;}
+  .form-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+
+  /* NATIONALITY FLAGS */
+  .country-select{position:relative;}
+
+  .btn{
+    width:100%;padding:13px;
+    border-radius:11px;border:none;cursor:pointer;
+    font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;
+    transition:all 0.2s;margin-top:8px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .btn-primary{background:var(--navy);color:white;box-shadow:0 4px 14px rgba(30,58,95,0.3);}
+  .btn-primary:hover{background:#152d4d;transform:translateY(-1px);}
+  .btn-secondary{background:white;color:var(--ink);border:1.5px solid var(--border);}
+  .btn-secondary:hover{border-color:var(--navy);}
+
+  .error-msg{color:var(--red);font-size:13px;margin-top:10px;padding:10px 14px;background:#FEF2F2;border-radius:8px;border:1px solid #FECACA;display:none;}
+  .success-msg{color:var(--green);font-size:13px;margin-top:10px;padding:10px 14px;background:#F0FDF4;border-radius:8px;border:1px solid #BBF7D0;display:none;}
+
+  /* OTP */
+  .otp-section{
+    background:var(--bg);border:1.5px solid var(--border);
+    border-radius:12px;padding:20px;margin-top:20px;
+    display:none;
+  }
+  .otp-label{font-size:13px;color:var(--muted);margin-bottom:8px;}
+  .otp-display{
+    font-family:'Space Mono',monospace;
+    font-size:32px;font-weight:700;color:var(--navy);
+    letter-spacing:10px;text-align:center;padding:12px;
+    background:white;border-radius:8px;border:1px solid var(--border);
+    margin-bottom:12px;
+  }
+  .otp-input{letter-spacing:6px;text-align:center;font-size:20px;font-weight:700;}
+
+  /* BLOCKCHAIN MINT ANIMATION */
+  .mint-animation{
+    text-align:center;padding:32px;display:none;
+  }
+  .mint-animation .mint-icon{font-size:48px;margin-bottom:16px;animation:bounce 1s ease infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .mint-animation h3{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:8px;}
+  .mint-animation p{font-size:14px;color:var(--muted);}
+  .mint-hash{
+    font-family:'Space Mono',monospace;font-size:11px;
+    color:var(--teal);margin-top:12px;word-break:break-all;
+    background:var(--bg);padding:10px;border-radius:8px;
+  }
+  .progress-bar{height:4px;background:var(--border);border-radius:2px;margin-top:16px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--teal);border-radius:2px;width:0;transition:width 0.1s linear;}
+
+  /* COMMUNITY STATS */
+  .community-stats{
+    background:white;border:1.5px solid var(--border);
+    border-radius:12px;padding:20px;
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+    margin-top:24px;
+  }
+  .cs-item{text-align:center;}
+  .cs-num{font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--navy);}
+  .cs-label{font-size:11px;color:var(--muted);margin-top:3px;}
+
+  @media(max-width:800px){
+    body{grid-template-columns:1fr;}
+    .left{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LEFT PANEL -->
+<div class="left">
+  <a href="index.html" class="left-logo">🛡️ Guardian<span>Trail</span></a>
+  <h2>Your safety,<br>verifiable forever.</h2>
+  <p>Join the platform that gives tourists a tamper-proof blockchain identity and real-time safety protection.</p>
+
+  <div class="feature-list">
+    <div class="feature-item">
+      <div class="fi-icon">⛓️</div>
+      <div class="fi-text">
+        <strong>Blockchain Digital ID</strong>
+        <span>Minted on Ethereum — unforgeable</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="fi-icon">📍</div>
+      <div class="fi-text">
+        <strong>Geo-Fenced Protection</strong>
+        <span>Instant alerts if you enter danger zones</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="fi-icon">🆘</div>
+      <div class="fi-text">
+        <strong>One-Touch Panic SOS</strong>
+        <span>Alerts nearest officer in under 3 seconds</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="fi-icon">📓</div>
+      <div class="fi-text">
+        <strong>Travel Journal</strong>
+        <span>Auto-generates your trip itinerary</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="fi-icon">🌤️</div>
+      <div class="fi-text">
+        <strong>Weather Safety Alerts</strong>
+        <span>Safety score adjusts for local conditions</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chain-card">
+    <div class="chain-card-label">LAST MINTED ID</div>
+    <div class="chain-hash" id="lastHash">0x4a2f9c1e8b7d3a6f... awaiting next registration</div>
+    <div class="chain-status"><div class="cdot"></div> Ethereum Mainnet · Block #<span id="blockNo">18924507</span></div>
+  </div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="right">
+  <div class="right-header">
+    <h1>Create your account</h1>
+    <p>Takes about 2 minutes. You'll get your blockchain ID immediately.</p>
+    <p class="login-link">Already registered? <a href="home.html">Sign in →</a></p>
+  </div>
+
+  <div class="steps-bar">
+    <div class="step-tab active" id="tab1">1. Personal Info</div>
+    <div class="step-tab" id="tab2">2. Travel Details</div>
+    <div class="step-tab" id="tab3">3. Verify & Mint</div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="form-step active" id="step1">
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Full Name (as in passport)</label>
+        <input type="text" id="name" placeholder="e.g. Arjun Mehta">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="you@email.com">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" id="phone" placeholder="+91 98765 43210">
+      </div>
+      <div class="form-group">
+        <label>Date of Birth</label>
+        <input type="date" id="dob">
+      </div>
+      <div class="form-group">
+        <label>Gender</label>
+        <select id="gender">
+          <option value="">Select</option>
+          <option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="At least 8 characters">
+        <div class="form-hint">Use a strong password — this protects your blockchain identity.</div>
+      </div>
+    </div>
+    <div id="err1" class="error-msg"></div>
+    <button class="btn btn-primary" onclick="goStep2()">Continue → Travel Details</button>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="form-step" id="step2">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Nationality</label>
+        <input type="text" id="nationality" placeholder="e.g. Indian">
+      </div>
+      <div class="form-group">
+        <label>Passport / National ID No.</label>
+        <input type="text" id="passport" placeholder="e.g. A1234567">
+      </div>
+      <div class="form-group full">
+        <label>Primary Destination Zone</label>
+        <select id="zone">
+          <option value="">Choose your main travel zone</option>
+          <option>Heritage Zone A — Old City & Temples</option>
+          <option>Coastal Zone B — Beach & Waterfront</option>
+          <option>Hill Zone C — Mountain Trails & Forests</option>
+          <option>Urban Zone D — City Center & Markets</option>
+          <option>Wildlife Zone E — National Park & Reserve</option>
+          <option>Rural Zone F — Villages & Farmlands</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Arrival Date</label>
+        <input type="date" id="arrivalDate">
+      </div>
+      <div class="form-group">
+        <label>Departure Date</label>
+        <input type="date" id="departureDate">
+      </div>
+      <div class="form-group full">
+        <label>Emergency Contact Name</label>
+        <input type="text" id="emergencyName" placeholder="Person to contact if incident occurs">
+      </div>
+      <div class="form-group full">
+        <label>Emergency Contact Phone</label>
+        <input type="text" id="emergencyPhone" placeholder="+91 XXXXX XXXXX">
+      </div>
+      <div class="form-group full">
+        <label>Medical Conditions (optional)</label>
+        <textarea id="medical" rows="2" placeholder="Allergies, conditions officers should know about..."></textarea>
+      </div>
+    </div>
+    <div id="err2" class="error-msg"></div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-secondary" onclick="goStep1()" style="margin-top:8px;">← Back</button>
+      <button class="btn btn-primary" onclick="goStep3()">Continue → Verify</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="form-step" id="step3">
+    <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;">📋 Registration Summary</div>
+      <div id="summaryBox" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--muted);"></div>
+    </div>
+
+    <div id="otpSection" class="otp-section">
+      <div class="otp-label">📱 We generated a verification OTP for you:</div>
+      <div class="otp-display" id="otpDisplay">----</div>
+      <input class="otp-input" type="text" id="otpInput" placeholder="Enter OTP" maxlength="4">
+      <div id="otpErr" class="error-msg" style="margin-top:8px;"></div>
+      <button class="btn btn-primary" onclick="verifyAndMint()" style="margin-top:12px;">⛓️ Verify & Mint Blockchain ID</button>
+    </div>
+
+    <div class="mint-animation" id="mintAnim">
+      <div class="mint-icon">⛓️</div>
+      <h3>Minting your Digital ID...</h3>
+      <p>Writing your identity to the blockchain. This takes just a moment.</p>
+      <div class="mint-hash" id="mintHash"></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="community-stats">
+      <div class="cs-item">
+        <div class="cs-num" id="totalReg">0</div>
+        <div class="cs-label">Registered Tourists</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-num" id="totalInc">0</div>
+        <div class="cs-label">Incidents Handled</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-num">2.8s</div>
+        <div class="cs-label">Avg Response Time</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-num">99.4%</div>
+        <div class="cs-label">Resolution Rate</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:16px;">
+      <button class="btn btn-secondary" onclick="goStep2ForBack()">← Back</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let otp = '';
+
+// Stats
+const tourists = JSON.parse(localStorage.getItem('tourists')) || [];
+const incidents = JSON.parse(localStorage.getItem('incidents')) || [];
+document.getElementById('totalReg').textContent = tourists.length;
+document.getElementById('totalInc').textContent = incidents.length;
+
+// Simulate live block number
+let bn = 18924500 + tourists.length * 3;
+setInterval(() => {
+  bn++;
+  document.getElementById('blockNo').textContent = bn;
+}, 8000);
+
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.style.display = 'block';
+}
+function hideErr(id) { document.getElementById(id).style.display = 'none'; }
+
+function goStep1() {
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('tab1').classList.add('active');
+  document.getElementById('tab2').classList.remove('active','done');
+}
+function goStep2ForBack() {
+  document.getElementById('step3').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  document.getElementById('tab2').classList.add('active');
+  document.getElementById('tab3').classList.remove('active','done');
+}
+
+function goStep2() {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const pass = document.getElementById('password').value;
+  hideErr('err1');
+  if (!name||!email||!phone||!pass) { showErr('err1','Please fill all required fields.'); return; }
+  if (!email.includes('@')) { showErr('err1','Enter a valid email address.'); return; }
+  if (pass.length < 8) { showErr('err1','Password must be at least 8 characters.'); return; }
+  document.getElementById('tab1').classList.add('done');
+  document.getElementById('tab2').classList.add('active');
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+}
+
+function goStep3() {
+  const nationality = document.getElementById('nationality').value.trim();
+  const passport = document.getElementById('passport').value.trim();
+  const zone = document.getElementById('zone').value;
+  hideErr('err2');
+  if (!nationality||!passport||!zone) { showErr('err2','Please fill nationality, passport number and select a zone.'); return; }
+
+  document.getElementById('tab2').classList.add('done');
+  document.getElementById('tab3').classList.add('active');
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step3').classList.add('active');
+
+  // Build summary
+  const summary = document.getElementById('summaryBox');
+  const fields = [
+    ['Name', document.getElementById('name').value],
+    ['Email', document.getElementById('email').value],
+    ['Phone', document.getElementById('phone').value],
+    ['Nationality', nationality],
+    ['Passport', passport],
+    ['Zone', zone.split('—')[0].trim()],
+    ['Arrives', document.getElementById('arrivalDate').value || 'Not set'],
+    ['Departs', document.getElementById('departureDate').value || 'Not set'],
+  ];
+  summary.innerHTML = fields.map(([k,v]) => `<div><span style="color:var(--ink2);font-weight:600;">${k}:</span> ${v}</div>`).join('');
+
+  // Generate OTP
+  otp = String(Math.floor(1000 + Math.random() * 9000));
+  document.getElementById('otpDisplay').textContent = otp;
+  document.getElementById('otpSection').style.display = 'block';
+}
+
+function verifyAndMint() {
+  const entered = document.getElementById('otpInput').value.trim();
+  const errEl = document.getElementById('otpErr');
+  errEl.style.display = 'none';
+
+  if (entered !== otp) {
+    errEl.textContent = 'Incorrect OTP. Check the code above.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  document.getElementById('otpSection').style.display = 'none';
+  const anim = document.getElementById('mintAnim');
+  anim.style.display = 'block';
+
+  const hash = '0x' + Array.from({length:40},()=>Math.floor(Math.random()*16).toString(16)).join('');
+  document.getElementById('mintHash').textContent = 'TX: ' + hash;
+  document.getElementById('lastHash').textContent = hash.substring(0,24) + '...';
+
+  // Save data
+  const name = document.getElementById('name').value.trim();
+  const tourist = {
+    name, email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    dob: document.getElementById('dob').value,
+    gender: document.getElementById('gender').value,
+    nationality: document.getElementById('nationality').value.trim(),
+    passport: document.getElementById('passport').value.trim(),
+    zone: document.getElementById('zone').value,
+    arrivalDate: document.getElementById('arrivalDate').value,
+    departureDate: document.getElementById('departureDate').value,
+    emergencyName: document.getElementById('emergencyName').value,
+    emergencyPhone: document.getElementById('emergencyPhone').value,
+    medical: document.getElementById('medical').value,
+    blockchainId: hash,
+    registeredAt: new Date().toISOString(),
+    status: 'Active',
+    safetyScore: 95 + Math.floor(Math.random()*5)
+  };
+
+  // Store as current user
+  Object.entries(tourist).forEach(([k,v]) => localStorage.setItem('tourist_' + k, v));
+
+  const all = JSON.parse(localStorage.getItem('tourists')) || [];
+  all.push(tourist);
+  localStorage.setItem('tourists', JSON.stringify(all));
+
+  // Animate progress
+  const fill = document.getElementById('progressFill');
+  let w = 0;
+  const interval = setInterval(() => {
+    w += 2;
+    fill.style.width = w + '%';
+    if (w >= 100) {
+      clearInterval(interval);
+      setTimeout(() => window.location.href = 'home.html', 600);
+    }
+  }, 40);
+}
+</script>
+</body>
+</html>
