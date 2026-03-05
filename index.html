@@ -35,7 +35,7 @@
     overflow-x: hidden;
   }
 
-  /* grain texture overlay */
+  
   body::before {
     content: '';
     position: fixed;
@@ -46,7 +46,7 @@
     opacity: 0.4;
   }
 
-  /* ---- NAV ---- */
+  
   nav {
     position: sticky; top: 0; z-index: 500;
     background: rgba(249,250,251,0.9);
@@ -90,7 +90,7 @@
   }
   .nav-btn:hover { background: #152d4d !important; }
 
-  /* ---- HERO ---- */
+  
   .hero {
     min-height: calc(100vh - 64px);
     display: grid;
@@ -180,8 +180,8 @@
   }
   .trust-avatars span:first-child { margin-left: 0; }
 
-  /* ---- HERO VISUAL ---- */
-  .hero-visual { position: relative; }
+  
+  .hero-visual { position: relative; padding: 20px 20px 20px 20px; overflow: visible; }
 
   .phone-mockup {
     background: var(--white);
@@ -190,13 +190,16 @@
     padding: 20px;
     box-shadow: var(--shadow-lg);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    z-index: 1;
   }
   .phone-mockup::before {
     content: '';
     position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(13,148,136,0.04) 0%, transparent 60%);
     pointer-events: none;
+    border-radius: 22px;
+    z-index: 0;
   }
 
   .phone-header {
@@ -231,9 +234,9 @@
     0%,100% { transform: scale(1); opacity: 0.7; }
     50% { transform: scale(1.04); opacity: 1; }
   }
-  .zc-safe { width: 110px; height: 110px; border-color: var(--green); background: rgba(22,163,74,0.08); top: 20px; left: 20px; }
-  .zc-warn { width: 80px; height: 80px; border-color: var(--amber); background: rgba(217,119,6,0.08); top: 60px; right: 30px; }
-  .zc-danger { width: 60px; height: 60px; border-color: var(--red); background: rgba(220,38,38,0.08); bottom: 20px; left: 100px; }
+  .zc-safe { width: 110px; height: 110px; border-color: var(--green); background: rgba(22,163,74,0.1); top: 15px; left: 15px; }
+  .zc-warn { width: 80px; height: 80px; border-color: var(--amber); background: rgba(217,119,6,0.1); top: 50px; right: 20px; }
+  .zc-danger { width: 60px; height: 60px; border-color: var(--red); background: rgba(220,38,38,0.1); bottom: 15px; left: 95px; }
 
   .tourist-ping {
     position: absolute;
@@ -286,7 +289,7 @@
   }
   .stat-chip .l { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-  /* floating badge */
+  
   .floating-badge {
     position: absolute;
     background: white;
@@ -296,13 +299,15 @@
     box-shadow: var(--shadow);
     font-size: 12px; font-weight: 600;
     display: flex; align-items: center; gap: 7px;
+    z-index: 20;
+    pointer-events: none;
   }
-  .fb-1 { top: -16px; right: -20px; color: var(--teal); animation: float1 4s ease-in-out infinite; }
-  .fb-2 { bottom: 40px; left: -24px; color: var(--amber); animation: float2 5s ease-in-out infinite; }
+  .fb-1 { top: -14px; right: -14px; color: var(--teal); animation: float1 4s ease-in-out infinite; }
+  .fb-2 { bottom: 80px; left: -14px; color: var(--amber); animation: float2 5s ease-in-out infinite; }
   @keyframes float1 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
   @keyframes float2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
 
-  /* ---- TRUST BAR ---- */
+  
   .trust-bar {
     background: var(--navy);
     color: rgba(255,255,255,0.7);
@@ -314,7 +319,7 @@
   .trust-bar span { white-space: nowrap; }
   .trust-bar .dot { width: 4px; height: 4px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
 
-  /* ---- SECTIONS ---- */
+  
   section { padding: 96px 48px; }
 
   .section-inner { max-width: 1280px; margin: 0 auto; }
@@ -339,7 +344,7 @@
     margin-bottom: 56px;
   }
 
-  /* ---- FEATURES ---- */
+  
   .features-section { background: white; }
 
   .features-grid {
@@ -384,7 +389,7 @@
     margin-left: 8px; vertical-align: middle;
   }
 
-  /* ---- BLOCKCHAIN SECTION ---- */
+  
   .blockchain-section { background: var(--navy); color: white; }
 
   .blockchain-section .section-tag { color: var(--teal); }
@@ -441,7 +446,7 @@
   .chain-point p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
   .chain-icon { font-size: 28px; margin-bottom: 10px; }
 
-  /* ---- HOW IT WORKS ---- */
+  
   .steps {
     display: grid; grid-template-columns: repeat(4, 1fr);
     gap: 0; position: relative; margin-top: 56px;
@@ -470,7 +475,7 @@
   .step h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
   .step p { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-  /* ---- ROLES ---- */
+  
   .roles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
   .role-card {
     background: white; border: 1.5px solid var(--border);
@@ -489,7 +494,7 @@
   .role-link::after { content: '→'; transition: transform 0.2s; }
   .role-card:hover .role-link::after { transform: translateX(4px); }
 
-  /* ---- FOOTER ---- */
+  
   footer {
     background: var(--navy); color: rgba(255,255,255,0.6);
     padding: 48px; font-size: 13px;
@@ -530,7 +535,6 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-left">
     <div class="hero-eyebrow">
@@ -557,15 +561,15 @@
   </div>
 
   <div class="hero-visual">
-    <div class="floating-badge fb-1">⛓️ Blockchain Verified</div>
-    <div class="floating-badge fb-2">🤖 AI Threat Score: Low</div>
     <div class="phone-mockup">
+      <div class="floating-badge fb-1">⛓️ Blockchain Verified</div>
+      <div class="floating-badge fb-2">🤖 AI Threat Score: Low</div>
       <div class="phone-header">
         <div class="phone-header-title">Live Safety Map</div>
         <div class="live-indicator"><div class="live-dot"></div> LIVE</div>
       </div>
       <div class="map-area">
-        <!-- grid lines -->
+        
         <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
           <defs>
             <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
@@ -573,7 +577,7 @@
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)"/>
-          <!-- roads -->
+          
           <line x1="0" y1="100" x2="400" y2="100" stroke="#94a3b8" stroke-width="2" opacity="0.5"/>
           <line x1="180" y1="0" x2="180" y2="200" stroke="#94a3b8" stroke-width="2" opacity="0.5"/>
           <line x1="80" y1="0" x2="280" y2="200" stroke="#94a3b8" stroke-width="1.5" opacity="0.3"/>
@@ -603,7 +607,6 @@
   </div>
 </div>
 
-<!-- TRUST BAR -->
 <div class="trust-bar">
   <span>🏛️ Ministry of Tourism Certified</span>
   <div class="dot"></div>
@@ -618,7 +621,6 @@
   <span>🌍 12 States · 120+ Zones</span>
 </div>
 
-<!-- FEATURES -->
 <section class="features-section" id="features">
   <div class="section-inner">
     <div class="section-tag">// core features</div>
@@ -662,7 +664,6 @@
   </div>
 </section>
 
-<!-- BLOCKCHAIN -->
 <section class="blockchain-section" id="blockchain">
   <div class="section-inner">
     <div class="section-tag">// blockchain infrastructure</div>
@@ -699,12 +700,11 @@
         <span>GUARDIANTRAIL LEDGER — LIVE TRANSACTIONS</span>
         <span class="chain-status">● SYNCED</span>
       </div>
-      <!-- blocks added by JS -->
+      
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section style="background: white;" id="how">
   <div class="section-inner">
     <div class="section-tag">// how it works</div>
@@ -734,7 +734,6 @@
   </div>
 </section>
 
-<!-- ROLES -->
 <section>
   <div class="section-inner">
     <div class="section-tag">// access portals</div>
@@ -777,13 +776,12 @@
 </footer>
 
 <script>
-  // live counter
+
   setInterval(() => {
     const el = document.getElementById('counter1');
     if (el) el.textContent = 230 + Math.floor(Math.random() * 40);
   }, 4000);
 
-  // blockchain demo blocks
   const txTypes = [
     { icon: '🆔', title: 'Tourist ID Minted', sub: 'New digital identity registered' },
     { icon: '⚠️', title: 'Geo-Fence Alert', sub: 'Tourist entered restricted zone' },
@@ -817,12 +815,11 @@
 
   txTypes.forEach((tx, i) => addBlock(tx, i * 400));
 
-  // Keep adding blocks every few seconds
   let txIndex = 0;
   setInterval(() => {
     addBlock(txTypes[txIndex % txTypes.length], 0);
     txIndex++;
-    // keep max 10 blocks visible
+
     const blocks = chainDemo.querySelectorAll('.chain-block');
     if (blocks.length > 10) blocks[0].remove();
   }, 3500);
