@@ -36,7 +36,7 @@ input::placeholder,textarea::placeholder{color:#9CA3AF;}
 textarea{min-height:100px;resize:vertical;}
 .hint{font-size:11px;color:var(--muted);margin-top:4px;}
 
-/* AI tag */
+
 .ai-box{
   background:#EFF6FF;border:1px solid #BFDBFE;
   border-radius:8px;padding:10px 14px;
@@ -45,7 +45,7 @@ textarea{min-height:100px;resize:vertical;}
 }
 .ai-box.show{display:block;}
 
-/* SEVERITY */
+
 .sev-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
 .sev-opt{
   border:1.5px solid var(--border);background:white;
@@ -60,12 +60,10 @@ textarea{min-height:100px;resize:vertical;}
 .sev-opt.sel-med{border-color:var(--amber);background:#FFFBEB;}
 .sev-opt.sel-high{border-color:var(--red);background:#FEF2F2;}
 
-/* GPS ROW */
 .gps-row{display:grid;grid-template-columns:1fr auto;gap:10px;}
 .gps-btn{padding:11px 16px;background:var(--teal);color:white;border:none;border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
 .gps-btn:hover{background:#0f766e;}
 
-/* IMAGE UPLOAD */
 .upload-area{
   border:2px dashed var(--border);border-radius:12px;
   padding:28px;text-align:center;cursor:pointer;
@@ -78,7 +76,6 @@ textarea{min-height:100px;resize:vertical;}
 .upload-text span{color:var(--navy);text-decoration:underline;}
 .preview-img{width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin-top:10px;display:none;}
 
-/* SUBMIT */
 .submit-btn{
   width:100%;padding:15px;
   background:var(--red);color:white;border:none;
@@ -94,7 +91,6 @@ textarea{min-height:100px;resize:vertical;}
 .msg.err{background:#FEF2F2;border:1px solid #FECACA;color:var(--red);}
 .msg.ok{background:#F0FDF4;border:1px solid #BBF7D0;color:var(--green);}
 
-/* BLOCKCHAIN RECEIPT */
 .receipt{
   background:var(--navy);color:white;border-radius:14px;
   padding:24px;margin-top:24px;display:none;
@@ -209,7 +205,6 @@ textarea{min-height:100px;resize:vertical;}
 </div>
 
 <script>
-  // Set today's date/time as defaults
   const now = new Date();
   document.getElementById('incDate').value = now.toISOString().split('T')[0];
   document.getElementById('incTime').value = now.toTimeString().substring(0,5);
@@ -307,7 +302,6 @@ textarea{min-height:100px;resize:vertical;}
     all.push(incident);
     localStorage.setItem('incidents', JSON.stringify(all));
 
-    // Show receipt
     document.getElementById('rcTx').textContent = txHash;
     document.getElementById('rcBlock').textContent = '#' + blockNum;
     document.getElementById('rcId').textContent = chainId.substring(0,20) + '...';
