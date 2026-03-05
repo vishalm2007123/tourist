@@ -17,7 +17,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-h
 .page-title{font-size:28px;font-weight:900;color:var(--navy);letter-spacing:-1px;margin-bottom:6px;}
 .page-sub{font-size:14px;color:var(--muted);margin-bottom:32px;}
 
-/* ID CARD */
 .id-card-container{margin-bottom:32px;}
 .id-card{
   background:linear-gradient(135deg,#1e3a5f 0%,#1a3354 40%,#0f2340 100%);
@@ -25,8 +24,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-h
   position:relative;overflow:hidden;
   box-shadow:0 16px 48px rgba(30,58,95,0.4);
   max-width:680px;
-}
-/* decorative elements */
+
 .id-card::before{
   content:'';position:absolute;
   width:300px;height:300px;border-radius:50%;
@@ -70,17 +68,16 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-h
 .chain-icon-label{font-family:'Space Mono',monospace;font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:1.5px;flex-shrink:0;}
 .chain-addr{font-family:'Space Mono',monospace;font-size:12px;color:#5eead4;word-break:break-all;line-height:1.5;}
 
-/* TABS */
+
 .tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px;}
 .tab{padding:11px 20px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;}
 .tab:hover{color:var(--ink);}
 .tab.active{color:var(--navy);border-bottom-color:var(--navy);}
 
-/* PANELS */
+
 .panel{display:none;}
 .panel.active{display:block;}
 
-/* AUDIT LOG */
 .audit-item{
   padding:14px 18px;border:1px solid var(--border);border-radius:12px;
   margin-bottom:10px;display:grid;
@@ -100,13 +97,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-h
 .audit-time{font-size:11px;color:var(--muted);text-align:right;white-space:nowrap;}
 .audit-block{font-family:'Space Mono',monospace;font-size:10px;color:var(--teal);margin-top:2px;}
 
-/* STATS */
+
 .id-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
 .is-card{background:white;border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
 .is-num{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--navy);}
 .is-label{font-size:11px;color:var(--muted);margin-top:4px;}
 
-/* ACTIONS */
 .action-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;}
 .act-btn{padding:11px 20px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
 .ab-navy{background:var(--navy);color:white;}
@@ -130,7 +126,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-h
   <div class="page-title">🪪 My Blockchain Digital ID</div>
   <p class="page-sub">Your tamper-proof identity minted on Ethereum. Present this for instant verification at any checkpoint.</p>
 
-  <!-- ID CARD -->
+ 
   <div class="id-card-container">
     <div class="id-card" id="idCard">
       <div class="card-top">
@@ -167,7 +163,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-h
     </div>
   </div>
 
-  <!-- STATS -->
+
   <div class="id-stats">
     <div class="is-card">
       <div class="is-num" id="s1">0</div>
@@ -187,27 +183,27 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-h
     </div>
   </div>
 
-  <!-- ACTIONS -->
+  
   <div class="action-btns">
     <button class="act-btn ab-navy" onclick="window.print()">🖨️ Print ID Card</button>
     <button class="act-btn ab-teal" onclick="copyChain()">📋 Copy Blockchain Address</button>
     <a href="home.html" class="act-btn ab-outline">← Back to Dashboard</a>
   </div>
 
-  <!-- TABS -->
+ 
   <div class="tabs">
     <div class="tab active" onclick="showPanel('audit',this)">⛓️ Blockchain Audit Log</div>
     <div class="tab" onclick="showPanel('details',this)">📋 Full Details</div>
   </div>
 
-  <!-- AUDIT LOG -->
+
   <div class="panel active" id="panel-audit">
     <div id="auditLog">
       <div style="color:var(--muted);text-align:center;padding:32px;font-size:14px;">No blockchain records yet. Actions you take will appear here.</div>
     </div>
   </div>
 
-  <!-- FULL DETAILS -->
+
   <div class="panel" id="panel-details">
     <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:28px;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" id="detailGrid"></div>
@@ -219,12 +215,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);min-h
 const fields = ['name','email','phone','dob','gender','nationality','passport','zone','arrivalDate','departureDate','emergencyName','emergencyPhone','medical','blockchainId','blockchainid','safetyScore','registeredAt'];
 const data = {};
 fields.forEach(f => { data[f] = localStorage.getItem('tourist_' + f) || ''; });
-// also try blockchain_id
+
 const chainId = data.blockchainId || data.blockchainid || localStorage.getItem('tourist_blockchain_id') || '—';
 
 const name = data.name || 'Tourist';
 
-// Populate card
+
 document.getElementById('cardName').textContent = name;
 document.getElementById('cardNat').textContent = '🌍 ' + (data.nationality || '—');
 document.getElementById('cardPassport').textContent = data.passport || '—';
@@ -234,7 +230,7 @@ document.getElementById('cardEmergency').textContent = data.emergencyName || '�
 document.getElementById('cardDepart').textContent = data.departureDate || '—';
 document.getElementById('cardChain').textContent = chainId;
 
-// QR Code
+
 if (chainId !== '—') {
   try {
     new QRCode(document.getElementById('qrCanvas'), {
@@ -247,7 +243,7 @@ if (chainId !== '—') {
   }
 }
 
-// Stats
+
 const incidents = JSON.parse(localStorage.getItem('incidents')) || [];
 const journal = JSON.parse(localStorage.getItem('travel_journal_' + name)) || [];
 document.getElementById('s1').textContent = incidents.filter(i=>i.tourist===name).length;
@@ -255,7 +251,7 @@ document.getElementById('s2').textContent = Math.floor(Math.random()*5) + 1;
 document.getElementById('s3').textContent = journal.length;
 document.getElementById('s4').textContent = (data.safetyScore || '95') + '/100';
 
-// Audit log
+
 const auditEntries = [];
 if (chainId !== '—') {
   auditEntries.push({ icon: '🆔', type: 'audit-ai-teal', title: 'Digital ID Minted', sub: 'Tourist identity registered and written to blockchain', hash: chainId, time: new Date(data.registeredAt || Date.now()).toLocaleString('en-IN'), block: '#' + (18924500 + Math.floor(Math.random()*100)) });
@@ -282,7 +278,7 @@ if (auditEntries.length > 0) {
   `).join('');
 }
 
-// Details
+
 const detailEl = document.getElementById('detailGrid');
 const detailFields = [
   ['Full Name', name], ['Email', data.email], ['Phone', data.phone],
