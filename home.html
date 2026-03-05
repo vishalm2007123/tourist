@@ -19,7 +19,7 @@
 }
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);display:flex;}
 
-/* SIDEBAR */
+
 .sidebar{
   width:var(--sidebar);min-height:100vh;
   background:var(--white);border-right:1px solid var(--border);
@@ -32,7 +32,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .sidebar-logo a span{color:var(--teal);}
 .sidebar-logo .sub{font-size:11px;color:var(--muted);margin-top:3px;}
 
-/* User pill */
 .user-pill{margin:16px;padding:12px;background:var(--bg);border-radius:12px;border:1px solid var(--border);}
 .user-pill .avatar{width:36px;height:36px;border-radius:50%;background:var(--navy);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-bottom:8px;}
 .user-pill .uname{font-size:13px;font-weight:700;color:var(--navy);}
@@ -47,7 +46,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .nav-link.active{font-weight:600;}
 .nav-link .icon{font-size:16px;width:20px;text-align:center;}
 
-/* SOS */
+
 .sos-nav{
   margin:16px;padding:13px;
   background:var(--red);color:white;
@@ -67,10 +66,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .chain-mini-hash{font-family:'Space Mono',monospace;font-size:10px;color:#5eead4;word-break:break-all;line-height:1.5;}
 .chain-mini-btn{margin-top:8px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none;display:block;}
 
-/* MAIN */
+
 .main{flex:1;min-width:0;padding:28px;}
 
-/* TOPBAR */
+
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
 .topbar-left h1{font-size:22px;font-weight:900;color:var(--navy);letter-spacing:-0.5px;}
 .topbar-left p{font-size:13px;color:var(--muted);margin-top:3px;}
@@ -81,7 +80,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .tb-id{background:var(--white);color:var(--navy);border:1.5px solid var(--border);}
 .tb-id:hover{border-color:var(--navy);}
 
-/* ALERT BANNER */
+
 .alert-banner{
   background:#FFFBEB;border:1.5px solid #FCD34D;
   border-radius:12px;padding:14px 18px;
@@ -91,7 +90,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 }
 .alert-banner.show{display:flex;}
 
-/* STAT CARDS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
 .stat-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;transition:box-shadow 0.2s;}
 .stat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.08);}
@@ -102,24 +100,22 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .trend-up{color:var(--green);}
 .trend-down{color:var(--red);}
 
-/* GRID */
+
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
 .grid-3{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;}
 
-/* CARDS */
 .card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px;}
 .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
 .card-title{font-size:15px;font-weight:700;color:var(--navy);}
 .card-meta{font-size:12px;color:var(--muted);}
 .card-link{font-size:12px;font-weight:600;color:var(--teal);text-decoration:none;}
 
-/* MAP */
 #touristMap{width:100%;height:320px;border-radius:10px;border:1px solid var(--border);}
 .map-legend{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
 .legend-row{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
 .ldot{width:9px;height:9px;border-radius:50%;}
 
-/* INCIDENTS */
+
 .incident-item{padding:12px;border-radius:10px;border:1px solid var(--border);margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;transition:background 0.15s;cursor:pointer;}
 .incident-item:hover{background:var(--bg);}
 .ii-left .ii-type{font-size:14px;font-weight:600;color:var(--ink);}
@@ -129,14 +125,13 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .b-investigating{background:#EFF6FF;color:var(--blue);}
 .b-resolved{background:#F0FDF4;color:var(--green);}
 
-/* JOURNAL */
+
 .journal-entry{padding:12px 14px;border-left:3px solid var(--teal);background:#F0FDFA;border-radius:0 10px 10px 0;margin-bottom:10px;}
 .je-place{font-size:14px;font-weight:600;color:var(--navy);}
 .je-meta{font-size:11px;color:var(--muted);margin-top:2px;}
 .je-add-btn{width:100%;padding:10px;background:white;border:1.5px dashed var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;margin-top:6px;}
 .je-add-btn:hover{border-color:var(--teal);color:var(--teal);}
 
-/* WEATHER */
 .weather-card{
   background:linear-gradient(135deg,#EFF6FF,#DBEAFE);
   border:1px solid #BFDBFE;border-radius:14px;padding:20px;
@@ -146,7 +141,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .weather-details{margin-top:12px;font-size:12px;color:var(--ink2);}
 .weather-details div{margin:4px 0;}
 
-/* QUICK ACTIONS */
+
 .quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .qa-btn{
   padding:14px;border-radius:12px;text-align:center;
@@ -158,7 +153,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .qa-btn:hover{border-color:var(--navy);color:var(--navy);background:var(--bg);}
 .qa-icon{font-size:22px;margin-bottom:6px;display:block;}
 
-/* JOURNAL MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:900;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
 .modal{background:white;border-radius:18px;padding:32px;max-width:440px;width:100%;margin:20px;}
@@ -171,7 +165,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 .modal .btn-save{background:var(--navy);color:white;}
 .modal .btn-cancel{background:var(--bg);color:var(--muted);border:1px solid var(--border);}
 
-/* SOS OVERLAY */
+
 .sos-overlay{display:none;position:fixed;inset:0;background:rgba(220,38,38,0.95);z-index:9999;align-items:center;justify-content:center;flex-direction:column;color:white;text-align:center;}
 .sos-overlay.show{display:flex;}
 .sos-overlay h1{font-size:48px;font-weight:900;margin-bottom:12px;letter-spacing:-2px;}
@@ -182,7 +176,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 </head>
 <body>
 
-<!-- SIDEBAR -->
+
 <div class="sidebar">
   <div class="sidebar-logo">
     <a href="index.html">🛡️ Guardian<span>Trail</span></a>
@@ -217,7 +211,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
   </div>
 </div>
 
-<!-- MAIN -->
+
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
@@ -230,14 +224,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
     </div>
   </div>
 
-  <!-- ALERT BANNER -->
   <div class="alert-banner show" id="alertBanner">
     <span>⚠️</span>
     <span id="alertText">You are approaching the boundary of your assigned zone. Please check the map below.</span>
     <button onclick="document.getElementById('alertBanner').classList.remove('show')" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:18px;color:var(--amber);">×</button>
   </div>
 
-  <!-- STATS -->
   <div class="stats-row">
     <div class="stat-card">
       <div class="sc-label">My Incidents</div>
@@ -262,7 +254,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
     </div>
   </div>
 
-  <!-- MAP + WEATHER -->
   <div class="grid-3" id="weather">
     <div class="card">
       <div class="card-header">
@@ -303,7 +294,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
     </div>
   </div>
 
-  <!-- INCIDENTS + JOURNAL -->
+ 
   <div class="grid-2" id="journal">
     <div class="card">
       <div class="card-header">
@@ -324,7 +315,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
   </div>
 </div>
 
-<!-- JOURNAL MODAL -->
+
 <div class="modal-overlay" id="journalModal">
   <div class="modal">
     <h3>📓 Add Journal Entry</h3>
@@ -339,7 +330,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
   </div>
 </div>
 
-<!-- SOS OVERLAY -->
+
 <div class="sos-overlay" id="sosOverlay">
   <h1>🆘 SOS SENT</h1>
   <p>Response team has been alerted. Help is on the way.</p>
@@ -354,7 +345,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);displ
 </div>
 
 <script>
-// Load user data
+
 const name = localStorage.getItem('tourist_name') || 'Tourist';
 const zone = localStorage.getItem('tourist_zone') || 'Zone not set';
 const chainId = localStorage.getItem('tourist_blockchainId') || localStorage.getItem('tourist_blockchain_id') || '—';
@@ -368,13 +359,12 @@ document.getElementById('safetyScore').textContent = safetyScore;
 document.getElementById('scoreVal').textContent = safetyScore;
 document.getElementById('chainMini').textContent = chainId.substring(0,28) + '...';
 
-// Greeting
+
 const hour = new Date().getHours();
 const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
 document.getElementById('greeting').textContent = greet + ', ' + name + ' 👋';
 document.getElementById('dateStr').textContent = new Date().toLocaleDateString('en-IN', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-// Incidents
 const incidents = JSON.parse(localStorage.getItem('incidents')) || [];
 const myInc = incidents.filter(i => i.tourist === name);
 document.getElementById('myIncCount').textContent = myInc.length;
@@ -392,7 +382,6 @@ if (myInc.length > 0) {
   `).join('');
 }
 
-// Weather simulation
 const temps = [26,27,28,29,30,31,32];
 const hums = [58,62,65,68,70];
 document.getElementById('tempVal').textContent = temps[Math.floor(Math.random()*temps.length)] + '°C';
@@ -435,11 +424,10 @@ function saveJournal() {
   renderJournal();
 }
 
-// MAP
+
 const map = L.map('touristMap').setView([10.8279, 77.058], 14);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'© OSM'}).addTo(map);
 
-// Geo-fence zones
 L.circle([10.8279,77.058],{color:'#16a34a',fillColor:'#16a34a',fillOpacity:0.1,radius:400,weight:2}).addTo(map)
   .bindPopup('<b>✅ Safe Zone</b><br>Heritage District');
 L.circle([10.835,77.062],{color:'#d97706',fillColor:'#d97706',fillOpacity:0.1,radius:300,weight:2}).addTo(map)
@@ -447,16 +435,15 @@ L.circle([10.835,77.062],{color:'#d97706',fillColor:'#d97706',fillOpacity:0.1,ra
 L.circle([10.82,77.05],{color:'#dc2626',fillColor:'#dc2626',fillOpacity:0.1,radius:250,weight:2}).addTo(map)
   .bindPopup('<b>🔴 Restricted Zone</b><br>High-risk area');
 
-// Tourist marker (you)
 const youIcon = L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#2563eb;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(37,99,235,0.5);"></div>',iconSize:[14,14]});
 L.marker([10.8279,77.058],{icon:youIcon}).addTo(map).bindPopup(`<b>📍 You</b><br>${name}<br><small>${chainId.substring(0,16)}...</small>`).openPopup();
 
-// Other tourists
+
 [[10.830,77.060],[10.826,77.055],[10.832,77.057]].forEach(pos => {
   L.circleMarker(pos,{radius:7,fillColor:'#7c3aed',color:'white',weight:2,fillOpacity:0.8}).addTo(map).bindPopup('<b>Tourist</b><br>Monitored by GuardianTrail');
 });
 
-// Incident heatmap
+
 const heat = incidents.map(i => [
   i.lat || (10.8279+(Math.random()-0.5)*0.02),
   i.lng || (77.058+(Math.random()-0.5)*0.02),
@@ -464,13 +451,13 @@ const heat = incidents.map(i => [
 ]);
 if (heat.length) L.heatLayer(heat,{radius:30,blur:18}).addTo(map);
 
-// Journal pins
+
 journal.forEach(j => {
   L.circleMarker([j.lat||10.828,j.lng||77.059],{radius:6,fillColor:'#0d9488',color:'white',weight:1,fillOpacity:0.9}).addTo(map)
     .bindPopup(`<b>📓 ${j.place}</b>`);
 });
 
-// SOS
+
 function triggerSOS() {
   document.getElementById('sosName').textContent = name;
   document.getElementById('sosChain').textContent = chainId.substring(0,20) + '...';
@@ -479,7 +466,7 @@ function triggerSOS() {
   document.getElementById('sosBtn').classList.add('panic');
   document.getElementById('sosOverlay').classList.add('show');
 
-  // Log SOS incident
+ 
   const allInc = JSON.parse(localStorage.getItem('incidents')) || [];
   allInc.push({
     id: Date.now(), type: 'SOS Emergency', description: 'Tourist triggered emergency SOS',
@@ -495,7 +482,7 @@ function closeSOS() {
   document.getElementById('sosBtn').classList.remove('panic');
 }
 
-// Alert banner text rotation
+
 const alerts = [
   'Weather advisory: High UV index today. Carry sunscreen and water.',
   'Crowd density alert: Market Zone B is crowded right now. Exercise caution.',
