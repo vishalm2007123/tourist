@@ -19,7 +19,7 @@ body{font-family:'Outfit',sans-serif;background:var(--navy);color:white;min-heig
 h1{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:6px;}
 .sub{font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:32px;}
 
-/* SEARCH */
+
 .search-row{display:flex;gap:10px;margin-bottom:32px;}
 .search-input{flex:1;padding:13px 18px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:11px;font-family:'Space Mono',monospace;font-size:13px;color:white;outline:none;transition:all 0.2s;}
 .search-input::placeholder{color:rgba(255,255,255,0.3);}
@@ -27,13 +27,12 @@ h1{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:6px;}
 .search-btn{padding:13px 22px;background:#5eead4;color:var(--navy);border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
 .search-btn:hover{background:#99f6e4;}
 
-/* STATS */
 .chain-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;}
 .cs{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:18px;}
 .cs-n{font-family:'Space Mono',monospace;font-size:26px;font-weight:700;color:#5eead4;margin-bottom:4px;}
 .cs-l{font-size:11px;color:rgba(255,255,255,0.5);}
 
-/* BLOCKS */
+
 .block-section-title{font-family:'Space Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
 .block-item{
   background:rgba(255,255,255,0.05);
@@ -51,7 +50,6 @@ h1{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:6px;}
 .bi-time{font-size:11px;color:rgba(255,255,255,0.4);text-align:right;white-space:nowrap;}
 .bi-time .bi-ago{color:rgba(255,255,255,0.3);font-size:10px;margin-top:2px;}
 
-/* SEARCH RESULT */
 .search-result{background:rgba(94,234,212,0.08);border:1px solid rgba(94,234,212,0.25);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:none;}
 .sr-title{font-size:13px;font-weight:700;color:#5eead4;margin-bottom:14px;font-family:'Space Mono',monospace;letter-spacing:1px;}
 .sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
@@ -128,7 +126,7 @@ journal.forEach(j => {
   });
 });
 
-// Add simulated entries if empty
+
 if (entries.length === 0) {
   const sims = ['Tourist ID Minted','Incident: Theft','Zone Check-In','ID Verified','Incident Resolved','SOS Alert'];
   sims.forEach((s,i) => {
